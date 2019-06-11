@@ -31,15 +31,11 @@ var advert = [
     author:
     {
       avatar: getAvatarNumber()
-    }
-  },
-  {
+    },
     offer:
     {
       type: TYPE_OF_OFFER[getPlace()]
-    }
-  },
-  {
+    },
     location:
     {
       x: getLocation(minXLocation, maxXLocation),
@@ -50,15 +46,11 @@ var advert = [
     author:
     {
       avatar: getAvatarNumber()
-    }
-  },
-  {
+    },
     offer:
     {
       type: TYPE_OF_OFFER[getPlace()]
-    }
-  },
-  {
+    },
     location:
     {
       x: getLocation(minXLocation, maxXLocation),
@@ -69,15 +61,11 @@ var advert = [
     author:
     {
       avatar: getAvatarNumber()
-    }
-  },
-  {
+    },
     offer:
     {
       type: TYPE_OF_OFFER[getPlace()]
-    }
-  },
-  {
+    },
     location:
     {
       x: getLocation(minXLocation, maxXLocation),
@@ -88,15 +76,11 @@ var advert = [
     author:
     {
       avatar: getAvatarNumber()
-    }
-  },
-  {
+    },
     offer:
     {
       type: TYPE_OF_OFFER[getPlace()]
-    }
-  },
-  {
+    },
     location:
     {
       x: getLocation(minXLocation, maxXLocation),
@@ -107,15 +91,11 @@ var advert = [
     author:
     {
       avatar: getAvatarNumber()
-    }
-  },
-  {
+    },
     offer:
     {
       type: TYPE_OF_OFFER[getPlace()]
-    }
-  },
-  {
+    },
     location:
     {
       x: getLocation(minXLocation, maxXLocation),
@@ -126,15 +106,11 @@ var advert = [
     author:
     {
       avatar: getAvatarNumber()
-    }
-  },
-  {
+    },
     offer:
     {
       type: TYPE_OF_OFFER[getPlace()]
-    }
-  },
-  {
+    },
     location:
     {
       x: getLocation(minXLocation, maxXLocation),
@@ -145,15 +121,11 @@ var advert = [
     author:
     {
       avatar: getAvatarNumber()
-    }
-  },
-  {
+    },
     offer:
     {
       type: TYPE_OF_OFFER[getPlace()]
-    }
-  },
-  {
+    },
     location:
     {
       x: getLocation(minXLocation, maxXLocation),
@@ -164,15 +136,11 @@ var advert = [
     author:
     {
       avatar: getAvatarNumber()
-    }
-  },
-  {
+    },
     offer:
     {
       type: TYPE_OF_OFFER[getPlace()]
-    }
-  },
-  {
+    },
     location:
     {
       x: getLocation(minXLocation, maxXLocation),
