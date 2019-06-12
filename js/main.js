@@ -5,10 +5,12 @@ var minXLocation = 0;
 var maxXLocation = 1200;
 var minYLocation = 130;
 var maxYLocation = 630;
+var marker = 8;
+var pinSize = 65;
 
 var getAvatarNumber = function () {
   var avatarsList = [];
-  for (var i = 1; i < 8; i++) {
+  for (var i = 1; i < marker + 1; i++) {
     var avatars = 'img/avatars/user0' + i + '.png';
     avatarsList.push(avatars);
   }
@@ -26,151 +28,57 @@ var getLocation = function (min, max) {
   return Math.floor(Math.random() * ((max + 1) - min) + min);
 };
 
-var advert = [
-  {
-    author:
-    {
-      avatar: getAvatarNumber()
-    },
-    offer:
-    {
-      type: TYPE_OF_OFFER[getPlace()]
-    },
-    location:
-    {
-      x: getLocation(minXLocation, maxXLocation),
-      y: getLocation(minYLocation, maxYLocation)
-    }
-  },
-  {
-    author:
-    {
-      avatar: getAvatarNumber()
-    },
-    offer:
-    {
-      type: TYPE_OF_OFFER[getPlace()]
-    },
-    location:
-    {
-      x: getLocation(minXLocation, maxXLocation),
-      y: getLocation(minYLocation, maxYLocation)
-    }
-  },
-  {
-    author:
-    {
-      avatar: getAvatarNumber()
-    },
-    offer:
-    {
-      type: TYPE_OF_OFFER[getPlace()]
-    },
-    location:
-    {
-      x: getLocation(minXLocation, maxXLocation),
-      y: getLocation(minYLocation, maxYLocation)
-    }
-  },
-  {
-    author:
-    {
-      avatar: getAvatarNumber()
-    },
-    offer:
-    {
-      type: TYPE_OF_OFFER[getPlace()]
-    },
-    location:
-    {
-      x: getLocation(minXLocation, maxXLocation),
-      y: getLocation(minYLocation, maxYLocation)
-    }
-  },
-  {
-    author:
-    {
-      avatar: getAvatarNumber()
-    },
-    offer:
-    {
-      type: TYPE_OF_OFFER[getPlace()]
-    },
-    location:
-    {
-      x: getLocation(minXLocation, maxXLocation),
-      y: getLocation(minYLocation, maxYLocation)
-    }
-  },
-  {
-    author:
-    {
-      avatar: getAvatarNumber()
-    },
-    offer:
-    {
-      type: TYPE_OF_OFFER[getPlace()]
-    },
-    location:
-    {
-      x: getLocation(minXLocation, maxXLocation),
-      y: getLocation(minYLocation, maxYLocation)
-    }
-  },
-  {
-    author:
-    {
-      avatar: getAvatarNumber()
-    },
-    offer:
-    {
-      type: TYPE_OF_OFFER[getPlace()]
-    },
-    location:
-    {
-      x: getLocation(minXLocation, maxXLocation),
-      y: getLocation(minYLocation, maxYLocation)
-    }
-  },
-  {
-    author:
-    {
-      avatar: getAvatarNumber()
-    },
-    offer:
-    {
-      type: TYPE_OF_OFFER[getPlace()]
-    },
-    location:
-    {
-      x: getLocation(minXLocation, maxXLocation),
-      y: getLocation(minYLocation, maxYLocation)
-    }
+var getAds = function () {
+  var advert = [];
+  var list = getAvatarNumber();
+  for (var i = 0; i < marker; i++) {
+    advert.push(
+        {
+          author:
+          {
+            avatar: list[i]
+          },
+          offer:
+          {
+            type: TYPE_OF_OFFER[getPlace()]
+          },
+          location:
+          {
+            x: getLocation(minXLocation, maxXLocation),
+            y: getLocation(minYLocation, maxYLocation)
+          }
+        }
+    );
   }
-];
+  return advert;
+};
+var advert = getAds();
 
 var showMap = document.querySelector('.map');
 showMap.classList.remove('map--faded');
 
-var createNewPin = function () {
-  for (var i = 0; i < advert.length; i++) {
-    var userPin = document.createElement('button');
-    var userAvatar = document.createElement('img');
-    userPin.className = 'pin';
-    userPin.style.left = (advert[i].location.x - (65 / 2)) + 'px';
-    userPin.style.top = (advert[i].location.y - 87) + 'px';
-    userAvatar.width = 40;
-    userAvatar.height = 40;
-    userAvatar.src = advert[i].author.avatar[i];
-    userAvatar.alt = 'Метка объявления';
-    userPin.appendChild(userAvatar);
-  }
-  return userPin;
-};
-
 var blockElements = document.querySelector('.map__pins');
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < advert.length; i++) {
-  fragment.appendChild(createNewPin(advert[i]));
-}
-blockElements.appendChild(fragment);
+var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+
+var createNewPin = function () {
+  var newPinsList = [];
+  for (var i = 0; i < marker; i++) {
+    var pinMarker = pinTemplate.cloneNode(true);
+    pinMarker.style.left = (advert[i].location.x - (pinSize / 2)) + 'px';
+    pinMarker.style.top = (advert[i].location.y - pinSize) + 'px';
+    pinMarker.querySelector('img').src = advert[i].author.avatar;
+    pinMarker.querySelector('img').alt = advert[i].offer.type;
+    newPinsList.push(pinMarker);
+  }
+  return newPinsList;
+};
+var newPinsList = createNewPin();
+
+var insertPins = function () {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < advert.length; i++) {
+    fragment.appendChild(newPinsList[i]);
+  }
+  blockElements.appendChild(fragment);
+};
+insertPins();
