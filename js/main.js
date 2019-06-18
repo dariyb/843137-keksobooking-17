@@ -7,6 +7,10 @@ var minYLocation = 130;
 var maxYLocation = 630;
 var marker = 8;
 var pinSize = 65;
+var blockElements = document.querySelector('.map__pins');
+var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+var mapForm = document.querySelector('.map__filters');
+var mapFieldsets = mapForm.querySelectorAll('select');
 
 var getAvatarNumber = function () {
   var avatarsList = [];
@@ -54,9 +58,6 @@ var getAds = function () {
 };
 var advert = getAds();
 
-var blockElements = document.querySelector('.map__pins');
-var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-
 var createNewPin = function () {
   var newPinsList = [];
   for (var i = 0; i < marker; i++) {
@@ -87,17 +88,13 @@ var insertDisabled = function () {
   }
   return adFieldsets;
 };
-insertDisabled();
 
-var mapForm = document.querySelector('.map__filters');
-var mapFieldsets = mapForm.querySelectorAll('select');
 var mapDisabled = function () {
   for (var i = 0; i < mapFieldsets.length; i++) {
     mapFieldsets[i].setAttribute('disabled', 'disabled');
   }
   return mapFieldsets;
 };
-mapDisabled();
 
 var onActiveRemoveDisabled = function () {
   var mapBlock = document.querySelector('.map');
@@ -125,3 +122,6 @@ activeMap.addEventListener('click', onActiveRemoveDisabled);
 activeMap.addEventListener('mouseup', function () {
   pinAddress.value = PIN_LOCATION;
 });
+
+insertDisabled();
+mapDisabled();
