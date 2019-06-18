@@ -11,6 +11,11 @@ var blockElements = document.querySelector('.map__pins');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var mapForm = document.querySelector('.map__filters');
 var mapFieldsets = mapForm.querySelectorAll('select');
+var adForm = document.querySelector('.ad-form');
+var adFieldsets = adForm.querySelectorAll('fieldset');
+var activeMap = document.querySelector('.map__pin--main');
+var pinAddress = adForm.querySelector('input[name=address]');
+var PIN_LOCATION = (activeMap.style.left + ',' + activeMap.style.top);
 
 var getAvatarNumber = function () {
   var avatarsList = [];
@@ -80,8 +85,6 @@ var insertPins = function () {
   blockElements.appendChild(fragment);
 };
 
-var adForm = document.querySelector('.ad-form');
-var adFieldsets = adForm.querySelectorAll('fieldset');
 var insertDisabled = function () {
   for (var i = 0; i < adFieldsets.length; i++) {
     adFieldsets[i].setAttribute('disabled', 'disabled');
@@ -114,9 +117,6 @@ var onActiveRemoveDisabled = function () {
   return adFieldsets;
 };
 
-var activeMap = document.querySelector('.map__pin--main');
-var pinAddress = adForm.querySelector('input[name=address]');
-var PIN_LOCATION = (activeMap.style.left + ',' + activeMap.style.top);
 pinAddress.value = PIN_LOCATION;
 activeMap.addEventListener('click', onActiveRemoveDisabled);
 activeMap.addEventListener('mouseup', function () {
