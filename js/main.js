@@ -40,6 +40,7 @@ var houseType = adForm.querySelector('#type');
 var pricePlaceholder = adForm.querySelector('#price');
 var timeIn = adForm.querySelector('#timein');
 var timeOut = adForm.querySelector('#timeout');
+var submitButton = adForm.querySelector('.ad-form__submit');
 
 var getAvatarNumber = function () {
   var avatarsList = [];
@@ -166,7 +167,6 @@ timeIn.addEventListener('change', function () {
 timeOut.addEventListener('change', function () {
   timeIn.value = timeOut.value;
 });
-var submitButton = adForm.querySelector('.ad-form__submit');
 submitButton.addEventListener('click', function () {
   adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
