@@ -170,6 +170,18 @@ activeMap.addEventListener('mousedown', function (evt) {
       x: event.clientX,
       y: event.clientY
     };
+    if (event.clientX > minXLocation) {
+      startCoordinates.x = event.clientX;
+    }
+    if (event.clientX > maxXLocation) {
+      startCoordinates.x = maxXLocation;
+    }
+    if (event.clientY < minYLocation) {
+      startCoordinates.y = minYLocation;
+    }
+    if (event.clientY > maxYLocation) {
+      startCoordinates.y = maxYLocation;
+    }
 
     activeMap.style.top = (activeMap.offsetTop - shift.y) + 'px';
     activeMap.style.left = (activeMap.offsetLeft - shift.x) + 'px';
