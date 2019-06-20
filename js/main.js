@@ -15,7 +15,8 @@ var adForm = document.querySelector('.ad-form');
 var adFieldsets = adForm.querySelectorAll('fieldset');
 var activeMap = document.querySelector('.map__pin--main');
 var pinAddress = adForm.querySelector('input[name=address]');
-var PIN_LOCATION = (activeMap.style.left + ',' + activeMap.style.top);
+var startX = activeMap.offsetLeft;
+var startY = activeMap.offsetTop;
 
 var typesPrice = {
   bungalo:
@@ -92,8 +93,12 @@ var createNewPin = function () {
   var newPinsList = [];
   for (var i = 0; i < marker; i++) {
     var pinMarker = pinTemplate.cloneNode(true);
-    pinMarker.style.left = (advert[i].location.x - (pinSize / 2)) + 'px';
-    pinMarker.style.top = (advert[i].location.y - pinSize) + 'px';
+    pinMarker.style.left = (advert[i].location.x + (pinSize / 2)) + 'px';
+    if (advert[i].location.y >= (maxYLocation - pinSize)) {
+      pinMarker.style.top = (advert[i].location.y - pinSize) + 'px';
+    } else {
+      pinMarker.style.top = (advert[i].location.y + pinSize) + 'px';
+    }
     pinMarker.querySelector('img').src = advert[i].author.avatar;
     pinMarker.querySelector('img').alt = advert[i].offer.type;
     newPinsList.push(pinMarker);
@@ -142,10 +147,53 @@ var onActiveRemoveDisabled = function () {
   return adFieldsets;
 };
 
-pinAddress.value = PIN_LOCATION;
-activeMap.addEventListener('click', onActiveRemoveDisabled);
-activeMap.addEventListener('mouseup', function () {
-  pinAddress.value = PIN_LOCATION;
+pinAddress.value = startX + ',' + startY;
+activeMap.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+
+  var startCoordinates = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  var dragged = false;
+
+  var onMouseMove = function (event) {
+    event.preventDefault();
+    dragged = true;
+
+    var shift = {
+      x: startCoordinates.x - event.clientX,
+      y: startCoordinates.y - event.clientY
+    };
+    startCoordinates = {
+      x: event.clientX,
+      y: event.clientY
+    };
+
+    activeMap.style.top = (activeMap.offsetTop - shift.y) + 'px';
+    activeMap.style.left = (activeMap.offsetLeft - shift.x) + 'px';
+    onActiveRemoveDisabled();
+  };
+
+  var onMouseUp = function (e) {
+    e.preventDefault();
+
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+
+    if (dragged) {
+      var onClickPreventDefault = function (event) {
+        event.preventDefault();
+        activeMap.removeEventListener('click', onClickPreventDefault);
+      };
+      activeMap.addEventListener('click', onClickPreventDefault);
+    }
+    pinAddress.value = (activeMap.offsetLeft - (pinSize / 2)) + ',' + (activeMap.offsetTop - (pinSize + 22));
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
 });
 
 var getHousePrice = function () {
