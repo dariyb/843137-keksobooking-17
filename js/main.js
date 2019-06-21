@@ -170,17 +170,17 @@ activeMap.addEventListener('mousedown', function (evt) {
       x: event.clientX,
       y: event.clientY
     };
-    if (event.clientX > minXLocation) {
-      startCoordinates.x = event.clientX;
-    }
-    if (event.clientX > maxXLocation) {
-      startCoordinates.x = maxXLocation;
-    }
-    if (event.clientY < minYLocation) {
-      startCoordinates.y = minYLocation;
-    }
-    if (event.clientY > maxYLocation) {
-      startCoordinates.y = maxYLocation;
+
+    if (
+      (activeMap.offsetLeft < minXLocation - (pinSize / 2) && shift.x >= 0) ||
+      (activeMap.offsetLeft > maxXLocation - (pinSize / 2) && shift.x <= 0) ||
+      (activeMap.offsetTop < minYLocation && shift.y >= 0) ||
+      (activeMap.offsetTop > maxYLocation && shift.y <= 0)
+    ) {
+      shift = {
+        x: 0,
+        y: 0
+      };
     }
 
     activeMap.style.top = (activeMap.offsetTop - shift.y) + 'px';
@@ -201,7 +201,7 @@ activeMap.addEventListener('mousedown', function (evt) {
       };
       activeMap.addEventListener('click', onClickPreventDefault);
     }
-    pinAddress.value = (activeMap.offsetLeft - (pinSize / 2)) + ',' + (activeMap.offsetTop - (pinSize + 22));
+    pinAddress.value = (activeMap.offsetLeft - (pinSize / 2)) + ',' + (activeMap.offsetTop + (pinSize + 22));
   };
 
   document.addEventListener('mousemove', onMouseMove);
