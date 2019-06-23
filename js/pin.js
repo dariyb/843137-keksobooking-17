@@ -1,6 +1,5 @@
-
 'use strict';
-(function () {
+var pinModule = (function () {
   var blockElements = document.querySelector('.map__pins');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
@@ -67,12 +66,14 @@
     return newPinsList;
   };
   var newPinsList = createNewPin();
-
   var insertPins = function () {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < advert.length; i++) {
       fragment.appendChild(newPinsList[i]);
     }
     blockElements.appendChild(fragment);
+  };
+  return {
+    method: insertPins
   };
 })();
