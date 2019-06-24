@@ -1,5 +1,5 @@
 'use strict';
-var pinModule = (function () {
+window.pinModule = (function () {
   var blockElements = document.querySelector('.map__pins');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
@@ -74,6 +74,6 @@ var pinModule = (function () {
     blockElements.appendChild(fragment);
   };
   return {
-    method: insertPins
+    insertPins: insertPins
   };
 })();
