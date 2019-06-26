@@ -23,7 +23,18 @@ window.pinModule = (function () {
     }
     blockElements.appendChild(fragment);
   };
-  window.backend.load(insertPins);
+  var errorData = function () {
+    var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+    var main = document.body;
+    var errorBlock = errorTemplate.cloneNode(true);
+    var errorButton = errorBlock.querySelector('.ererror__button');
+
+    errorButton.addEventListener('click', function () {
+      main.removeChild(errorBlock);
+    });
+    main.appendChild(errorBlock);
+  };
+  window.backend.load(insertPins, errorData);
   return {
     insertPins: insertPins
   };

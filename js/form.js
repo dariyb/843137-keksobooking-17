@@ -1,6 +1,5 @@
 'use strict';
 (function () {
-  var adForm = document.querySelector('.ad-form');
   var startX = window.util.activeMap.offsetLeft;
   var startY = window.util.activeMap.offsetTop;
 
@@ -23,11 +22,11 @@
     }
   };
 
-  var houseType = adForm.querySelector('#type');
-  var pricePlaceholder = adForm.querySelector('#price');
-  var timeIn = adForm.querySelector('#timein');
-  var timeOut = adForm.querySelector('#timeout');
-  var submitButton = adForm.querySelector('.ad-form__submit');
+  var houseType = window.util.adForm.querySelector('#type');
+  var pricePlaceholder = window.util.adForm.querySelector('#price');
+  var timeIn = window.util.adForm.querySelector('#timein');
+  var timeOut = window.util.adForm.querySelector('#timeout');
+  var submitButton = window.util.adForm.querySelector('.ad-form__submit');
 
   window.util.pinAddress.value = startX + ',' + startY;
   var getHousePrice = function () {
@@ -50,7 +49,7 @@
     timeIn.value = timeOut.value;
   });
   submitButton.addEventListener('click', function () {
-    adForm.addEventListener('submit', function (evt) {
+    window.util.adForm.addEventListener('submit', function (evt) {
       evt.preventDefault();
     });
   });
