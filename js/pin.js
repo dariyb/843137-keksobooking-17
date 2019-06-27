@@ -4,22 +4,27 @@ window.pinModule = (function () {
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
   var createNewPin = function (data) {
-    var pinMarker = pinTemplate.cloneNode(true);
-    pinMarker.style.left = (data.location.x + (window.util.pinSize / 2)) + 'px';
-    if (data.location.y >= (window.util.maxYLocation - window.util.pinSize)) {
-      pinMarker.style.top = (data.location.y - window.util.pinSize) + 'px';
-    } else {
-      pinMarker.style.top = (data.location.y + window.util.pinSize) + 'px';
+    var newPinsList = [];
+    for (var i = 0; i < data.length; i++) {
+      var pinMarker = pinTemplate.cloneNode(true);
+      pinMarker.style.left = (data[i].location.x + (window.util.pinSize / 2)) + 'px';
+      if (data[i].location.y >= (window.util.maxYLocation - window.util.pinSize)) {
+        pinMarker.style.top = (data[i].location.y - window.util.pinSize) + 'px';
+      } else {
+        pinMarker.style.top = (data[i].location.y + window.util.pinSize) + 'px';
+      }
+      pinMarker.querySelector('img').src = data[i].author.avatar;
+      pinMarker.querySelector('img').alt = data[i].offer.type;
+      newPinsList.push(pinMarker);
     }
-    pinMarker.querySelector('img').src = data.author.avatar;
-    pinMarker.querySelector('img').alt = data.offer.type;
-
-    return pinMarker;
+    return newPinsList;
   };
-  var insertPins = function (pin) {
+  var newPinsList = createNewPin();
+
+  var insertPins = function () {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < pin.length; i++) {
-      fragment.appendChild(createNewPin(pin[i]));
+    for (var i = 0; i < 8; i++) {
+      fragment.appendChild(newPinsList[i]);
     }
     blockElements.appendChild(fragment);
   };
@@ -34,8 +39,8 @@ window.pinModule = (function () {
     });
     main.appendChild(errorBlock);
   };
-  window.backend.load(insertPins, errorData);
   return {
-    insertPins: insertPins
+    insertPins: insertPins,
+    errorData: errorData
   };
 })();

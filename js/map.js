@@ -22,7 +22,7 @@
     var mapBlock = document.querySelector('.map');
     mapBlock.classList.remove('map--faded');
     window.util.adForm.classList.remove('ad-form--disabled');
-    window.pinModule.insertPins();
+    window.backend.load(window.pinModule.insertPins(), window.pinModule.errorData());
     var activateMap = function () {
       for (var i = 0; i < mapFieldsets.length; i++) {
         mapFieldsets[i].removeAttribute('disabled', 'disabled');
