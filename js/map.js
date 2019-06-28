@@ -22,9 +22,6 @@
     var mapBlock = document.querySelector('.map');
     mapBlock.classList.remove('map--faded');
     window.util.adForm.classList.remove('ad-form--disabled');
-    window.backend.load(function (data) {
-      window.pinModule.insertPins(data);
-    }, window.error.errorData());
     var activateMap = function () {
       for (var i = 0; i < mapFieldsets.length; i++) {
         mapFieldsets[i].removeAttribute('disabled', 'disabled');
@@ -40,6 +37,9 @@
 
   window.util.activeMap.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
+    window.backend.load(function (data) {
+      window.pinModule.insertPins(data);
+    }, window.error.errorData);
 
     var startCoordinates = {
       x: evt.clientX,
