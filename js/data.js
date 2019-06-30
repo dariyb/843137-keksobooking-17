@@ -1,11 +1,10 @@
 'use strict';
 (function () {
   window.util = {
-    TYPE_OF_OFFER: ['palace', 'flat', 'house', 'bungalo'],
-    minXLocation: 0,
     maxXLocation: 1200,
-    minYLocation: 130,
+    minXLocation: 0,
     maxYLocation: 630,
+    minYLocation: 130,
     marker: 8,
     pinSize: 65,
     activeMap: document.querySelector('.map__pin--main'),
