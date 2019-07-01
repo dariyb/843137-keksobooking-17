@@ -3,6 +3,8 @@
   var adFieldsets = window.util.adForm.querySelectorAll('fieldset');
   var mapForm = document.querySelector('.map__filters');
   var mapFieldsets = mapForm.querySelectorAll('select');
+  var matchHousingType = mapForm.querySelector('#housing-type');
+  var offersData;
 
   var insertDisabled = function () {
     for (var i = 0; i < adFieldsets.length; i++) {
@@ -35,10 +37,33 @@
     return adFieldsets;
   };
 
+  var mathHousingFilter = function (item, type) {
+    if (type === 'any') {
+      return true;
+    }
+    return item.offer.type === type;
+  };
+  var applyFilter = function (offer, filters) {
+    return offer.filter(function (item) {
+      return mathHousingFilter(item, filters);
+    });
+  };
+
+  var getCurrentFilter = function () {
+    return matchHousingType.value;
+  };
+  var insertFilter = function () {
+    var currentFilter = getCurrentFilter();
+    var filteredOffers = applyFilter(offersData, currentFilter);
+    window.pinModule.deletePins(window.util.blockElements);
+    window.pinModule.insertPins(filteredOffers.slice(0, window.util.maxDisplay));
+  };
+
   window.util.activeMap.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
     window.backend.load(function (data) {
-      window.pinModule.insertPins(data);
+      offersData = data;
+      insertFilter();
     }, window.error.errorData);
 
     var startCoordinates = {
@@ -97,6 +122,7 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+  matchHousingType.addEventListener('change', insertFilter);
 
   insertDisabled();
   mapDisabled();
