@@ -116,7 +116,7 @@
         };
         window.util.activeMap.addEventListener('click', onClickPreventDefault);
       }
-      window.util.pinAddress.value = (window.util.activeMap.offsetLeft - (window.util.pinSize / 2)) + ',' + (window.util.activeMap.offsetTop + (window.util.pinSize + 22));
+      window.util.pinAddress.value = (window.util.activeMap.offsetLeft - (window.util.pinSize / 2)) + ',' + (window.util.activeMap.offsetTop + (window.util.pinSize + 20));
     };
 
     document.addEventListener('mousemove', onMouseMove);

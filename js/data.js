@@ -7,6 +7,8 @@
     minYLocation: 130,
     maxDisplay: 5,
     pinSize: 65,
+    pinWidth: 50,
+    pinHeigth: 70,
     activeMap: document.querySelector('.map__pin--main'),
     adForm: document.querySelector('.ad-form'),
     pinAddress: document.querySelector('input[name=address]'),
