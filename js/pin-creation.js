@@ -7,7 +7,7 @@ window.creationModule = (function () {
     pinMarker.style.left = (data.location.x - (window.util.pinWidth / 2)) + 'px';
     pinMarker.style.top = (data.location.y - window.util.pinHeigth) + 'px';
     pinMarker.querySelector('img').src = data.author.avatar;
-    pinMarker.querySelector('img').alt = data.offer.title;
+    pinMarker.querySelector('img').alt = data.offer.type;
     return pinMarker;
   };
   return {
