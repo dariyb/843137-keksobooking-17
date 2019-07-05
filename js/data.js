@@ -1,6 +1,8 @@
 'use strict';
 (function () {
   window.util = {
+    ESC_KEYCODE: 27,
+    ENTER_KEYCODE: 13,
     maxXLocation: 1200,
     minXLocation: 0,
     maxYLocation: 630,
