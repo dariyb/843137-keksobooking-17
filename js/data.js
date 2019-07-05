@@ -13,6 +13,8 @@
     adForm: document.querySelector('.ad-form'),
     pinAddress: document.querySelector('input[name=address]'),
     housingType: document.querySelector('#housing-type'),
-    blockElements: document.querySelector('.map__pins')
+    blockElements: document.querySelector('.map__pins'),
+    cardElements: document.querySelector('.map'),
+    mapFiltersContainer: document.querySelector('.map__filters--container')
   };
 })();
