@@ -4,12 +4,8 @@ window.creationModule = (function () {
 
   var createNewPin = function (data) {
     var pinMarker = pinTemplate.cloneNode(true);
-    pinMarker.style.left = (data.location.x + (window.util.pinSize / 2)) + 'px';
-    if (data.location.y >= (window.util.maxYLocation - window.util.pinSize)) {
-      pinMarker.style.top = (data.location.y - window.util.pinSize) + 'px';
-    } else {
-      pinMarker.style.top = (data.location.y + window.util.pinSize) + 'px';
-    }
+    pinMarker.style.left = (data.location.x - (window.util.pinWidth / 2)) + 'px';
+    pinMarker.style.top = (data.location.y - window.util.pinHeigth) + 'px';
     pinMarker.querySelector('img').src = data.author.avatar;
     pinMarker.querySelector('img').alt = data.offer.title;
     return pinMarker;

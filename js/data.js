@@ -5,10 +5,14 @@
     minXLocation: 0,
     maxYLocation: 630,
     minYLocation: 130,
-    marker: 8,
+    maxDisplay: 5,
     pinSize: 65,
+    pinWidth: 50,
+    pinHeigth: 70,
     activeMap: document.querySelector('.map__pin--main'),
     adForm: document.querySelector('.ad-form'),
-    pinAddress: document.querySelector('input[name=address]')
+    pinAddress: document.querySelector('input[name=address]'),
+    housingType: document.querySelector('#housing-type'),
+    blockElements: document.querySelector('.map__pins')
   };
 })();
