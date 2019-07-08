@@ -5,7 +5,7 @@ window.pinModule = (function () {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < array.length; i++) {
       fragment.appendChild(window.creationModule.createNewPin(array[i]));
-      fragment.appendChild(window.card.createCard(array[i]));
+      window.util.cardElements.insertBefore(fragment.appendChild(window.card.createCard(array[i])), document.querySelector('.map__filters-container'));
     }
     window.util.blockElements.appendChild(fragment);
   };

@@ -50,20 +50,8 @@
   });
   submitButton.addEventListener('click', function () {
     window.util.adForm.addEventListener('submit', function (evt) {
-      //      window.backend.save(new FormData(form), onLoad, onError);
       evt.preventDefault();
     });
   });
-  //  var onLoad = function () {
-  //  var successTemplate = document.querySelector('#success').content.querySelector('.success');
-  //  var success = successTemplate.cloneNode(true);
-  //  var main = document.querySelector('main');
-  //    main.appendChild(success);
-
-  //    var onSuccessRemoveChild = function () {
-  //    main.removeChild(success);
-  //  document.addEventListener('click', onSuccessRemoveChild);
-  //    };
-  // };
   matchHousePrice();
 })();

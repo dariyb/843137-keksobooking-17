@@ -56,6 +56,19 @@ window.card = (function () {
     cardInfo.querySelector('.popup__photos').removeChild(cardInfo.querySelector('.popup__photos').querySelector('img'));
     cardInfo.querySelector('.popup__photos').appendChild(fragment);
     cardInfo.classList.add('hidden');
+
+    var onPopupEscPress = function (evt) {
+      if (evt.keyCode === window.util.ESC_KEYCODE) {
+        closePopup();
+      }
+    };
+    var closePopup = function () {
+      cardInfo.classList.add('hidden');
+      document.removeEventListener('keydown', onPopupEscPress);
+    };
+    cardInfo.querySelector('.popup__close').addEventListener('click', closePopup);
+    document.querySelector('keydown', onPopupEscPress);
+
     return cardInfo;
   };
   return {
@@ -63,4 +76,4 @@ window.card = (function () {
   };
 })();
 
-// доделать features and photo
+// доделать features
