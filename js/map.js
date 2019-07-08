@@ -66,31 +66,6 @@
       insertFilter();
     }, window.error.errorData);
 
-    var popupBlock = document.querySelector('.map__card');
-
-    var onPopupEscPress = function (e) {
-      if (e.keyCode === window.util.ESC_KEYCODE) {
-        closePopup();
-      }
-    };
-    var openPopup = function () {
-      popupBlock.classList.remove('hidden');
-      document.addEventListener('keydown', onPopupEscPress);
-    };
-    var closePopup = function () {
-      popupBlock.classList.add('hidden');
-      document.removeEventListener('keydown', onPopupEscPress);
-    };
-
-    window.util.blockElements.addEventListener('click', function () {
-      openPopup();
-    });
-    window.util.blockElements.addEventListener('keydown', function (event) {
-      if (event.keyCode === window.util.ENTER_KEYCODE) {
-        openPopup();
-      }
-    });
-
     var startCoordinates = {
       x: evt.clientX,
       y: evt.clientY
@@ -149,6 +124,33 @@
   });
   matchHousingType.addEventListener('change', insertFilter);
 
+  var onPopupEscPress = function (e) {
+    if (e.keyCode === window.util.ESC_KEYCODE) {
+      closePopup();
+    }
+  };
+  var openPopup = function () {
+    var popupBlock = document.querySelector('.map__card');
+
+    popupBlock.classList.remove('hidden');
+    document.addEventListener('keydown', onPopupEscPress);
+  };
+  var closePopup = function () {
+    var popupBlock = document.querySelector('.map__card');
+    popupBlock.classList.add('hidden');
+    document.removeEventListener('keydown', onPopupEscPress);
+  };
+
+  // здесь изменила с window.util.blockElements тк нужны сами пины.
+  // но ошибку выдает ту же, что и с map__card
+  document.querySelector('.map__pin').addEventListener('click', function () {
+    openPopup();
+  });
+  document.querySelector('.map__pin').addEventListener('keydown', function (event) {
+    if (event.keyCode === window.util.ENTER_KEYCODE) {
+      openPopup();
+    }
+  });
 
   insertDisabled();
   mapDisabled();
