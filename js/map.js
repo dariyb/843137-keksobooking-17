@@ -6,6 +6,10 @@
   var matchHousingType = mapForm.querySelector('#housing-type');
   var offersData;
 
+  window.backend.load(function (data) {
+    offersData = data;
+  }, window.error.errorData);
+
   var insertDisabled = function () {
     for (var i = 0; i < adFieldsets.length; i++) {
       adFieldsets[i].setAttribute('disabled', 'disabled');
@@ -61,10 +65,8 @@
 
   window.util.activeMap.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-    window.backend.load(function (data) {
-      offersData = data;
-      insertFilter();
-    }, window.error.errorData);
+
+    insertFilter();
 
     var startCoordinates = {
       x: evt.clientX,

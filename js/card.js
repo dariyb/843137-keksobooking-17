@@ -55,7 +55,7 @@ window.card = (function () {
     }
     cardInfo.querySelector('.popup__photos').removeChild(cardInfo.querySelector('.popup__photos').querySelector('img'));
     cardInfo.querySelector('.popup__photos').appendChild(fragment);
-    //    cardInfo.classList.add('hidden');
+    cardInfo.classList.add('hidden');
     return cardInfo;
   };
   return {
