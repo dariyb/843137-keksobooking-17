@@ -13,11 +13,6 @@
         openPopup();
       }
     });
-    var openPopup = function () {
-      var popupBlock = document.querySelector('.map__card');
-
-      popupBlock.classList.remove('hidden');
-    };
   }, window.error.errorData);
 
   var insertDisabled = function () {
@@ -136,6 +131,16 @@
   });
   matchHousingType.addEventListener('change', insertFilter);
 
+  var openPopup = function () {
+    var popupBlock = document.querySelector('.map__card');
+
+    popupBlock.classList.remove('hidden');
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.util.ESC_KEYCODE) {
+        window.card.closePopup();
+      }
+    });
+  };
 
   insertDisabled();
   mapDisabled();
