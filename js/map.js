@@ -1,10 +1,19 @@
 'use strict';
-(function () {
+window.map = (function () {
   var adFieldsets = window.util.adForm.querySelectorAll('fieldset');
   var mapForm = document.querySelector('.map__filters');
   var mapFieldsets = mapForm.querySelectorAll('select');
   var matchHousingType = mapForm.querySelector('#housing-type');
+  //  var filterHousingPrice = mapForm.querySelector('#housing-price');
+  // var filterRooms = mapForm.querySelector('#housing-rooms');
+  //  var filterGuests = mapForm.querySelector('#housinf-guests');
+  //  var filterFeatures = mapForm.querySelector('#housing-features');
   var offersData;
+
+  var defCoordinates = {
+    x: window.util.activeMap.style.left,
+    y: window.util.activeMap.style.top
+  };
 
   window.backend.load(function (data) {
     offersData = data;
@@ -30,8 +39,7 @@
   };
 
   var onActiveRemoveDisabled = function () {
-    var mapBlock = document.querySelector('.map');
-    mapBlock.classList.remove('map--faded');
+    window.util.cardElements.classList.remove('map--faded');
     window.util.adForm.classList.remove('ad-form--disabled');
     var activateMap = function () {
       for (var i = 0; i < mapFieldsets.length; i++) {
@@ -45,19 +53,18 @@
     }
     return adFieldsets;
   };
-
   var mathHousingFilter = function (item, type) {
     if (type === 'any') {
       return true;
     }
     return item.offer.type === type;
   };
+
   var applyFilter = function (offer, filters) {
     return offer.filter(function (item) {
       return mathHousingFilter(item, filters);
     });
   };
-
   var getCurrentFilter = function () {
     return matchHousingType.value;
   };
@@ -130,6 +137,9 @@
     document.addEventListener('mouseup', onMouseUp);
   });
   matchHousingType.addEventListener('change', insertFilter);
+  //  filterHousingPrice.addEventListener('change', insertFilter);
+  // filterRooms.addEventListener('change', insertFilter);
+  //  filterGuests.addEventListener('change', insertFilter);
 
   var openPopup = function () {
     var popupBlock = document.querySelector('.map__card');
@@ -141,7 +151,26 @@
       }
     });
   };
+  var deactivateMap = function () {
+    window.util.cardElements.classList.add('map--faded');
+    window.util.activeMap.style.top = defCoordinates.y;
+    window.util.activeMap.style.left = defCoordinates.x;
+    document.querySelectorAll('.map__pin');
+    document.querySelectorAll('.map__card');
+  };
+  var baseCoordinatesAddress = function () {
+    var xPin = parseInt(window.util.activeMap.style.left, 10) + Math.ceil(window.util.pinSize / 2);
+    var yPin = parseInt(window.util.activeMap.style.top, 10) + Math.ceil(window.util.pinSize);
+    window.util.pinAddress.value = xPin + ',' + yPin;
+  };
 
   insertDisabled();
   mapDisabled();
+  baseCoordinatesAddress();
+  return {
+    insertDisabled: insertDisabled,
+    mapDisabled: mapDisabled,
+    deactivateMap: deactivateMap,
+    onActiveRemoveDisabled: onActiveRemoveDisabled
+  };
 })();
