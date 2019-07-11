@@ -94,12 +94,12 @@ window.map = (function () {
     }
     if (setRoom !== 'any') {
       data = data.filter(function (info) {
-        return info.offer.rooms === housingRooms.value;
+        return info.offer.rooms === parseInt(housingRooms.value, 10);
       });
     }
     if (setGuest !== 'any') {
       data = data.filter(function (info) {
-        return info.offer.guests === housingGuests.value;
+        return info.offer.guests === parseInt(housingGuests.value, 10);
       });
     }
     return data;
