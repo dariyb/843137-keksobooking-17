@@ -3,10 +3,10 @@ window.pinModule = (function () {
 
   var insertPins = function (array) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < array.length; i++) {
-      fragment.appendChild(window.creationModule.createNewPin(array[i]));
-      window.util.cardElements.insertBefore(fragment.appendChild(window.card.createCard(array[i])), document.querySelector('.map__filters-container'));
-    }
+    array.forEach(function (element, id) {
+      fragment.appendChild(window.creationModule.createNewPin(id, element));
+      window.util.cardElements.insertBefore(fragment.appendChild(window.card.createCard(id, element)), document.querySelector('.map__filters-container'));
+    });
     window.util.blockElements.appendChild(fragment);
   };
   var deletePins = function (block) {

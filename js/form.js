@@ -32,12 +32,32 @@ window.form = (function () {
   var guestsOption = guestsNumber.querySelectorAll('option');
   var adFormReset = window.util.adForm.querySelector('.ad-form__reset');
 
-  var LIMIT = {
-    '1': ['1'],
-    '2': ['1', '2'],
-    '3': ['1', '2', '3'],
-    '100': ['0']
+  var getAvailableOptions = function () {
+    guestsOption.forEach(function (guest) {
+      guest.remove();
+    });
+    var applyCapacity = function (guests) {
+      guests.forEach(function (guest) {
+        guestsNumber.appendChild(guestsOption[guest]);
+      });
+    };
+    switch (roomNumber.selectedIndex) {
+      case 0:
+        applyCapacity([2]);
+        break;
+      case 1:
+        applyCapacity([1, 2]);
+        break;
+      case 2:
+        applyCapacity([0, 1, 2]);
+        break;
+      case 3:
+        applyCapacity([3]);
+        break;
+    }
   };
+  getAvailableOptions();
+  roomNumber.addEventListener('change', getAvailableOptions);
 
   window.util.pinAddress.value = startX + ',' + startY;
   var getHousePrice = function () {
@@ -67,19 +87,6 @@ window.form = (function () {
   });
   matchHousePrice();
 
-  var matchRoomCapacity = function () {
-    var numberOfGuests = LIMIT[roomNumber.value];
-    for (var i = 0; i < guestsOption.length; i++) {
-      guestsOption[i].disabled = false;
-      if (numberOfGuests.indexOf(guestsOption[i].value) === -1) {
-        guestsOption[i].disabled = true;
-      }
-    }
-    if (numberOfGuests.indexOf(guestsNumber.value) === -1) {
-      guestsNumber.setCustomValidity('Необходимо выбрать другой вариант');
-    }
-  };
-  roomNumber.addEventListener('change', matchRoomCapacity);
   var onLoad = function () {
     var successTemplate = document.querySelector('#success').content.querySelector('.success');
     var success = successTemplate.cloneNode(true);
@@ -88,7 +95,7 @@ window.form = (function () {
     window.pinModule.deletePins(window.util.blockElements);
     resetForm();
     disableMap();
-    window.util.pinAddress.value = (window.util.activeMap.offsetLeft - (window.util.pinSize / 2)) + ',' + (window.util.activeMap.offsetTop + (window.util.pinSize + 20));
+    window.util.pinAddress.value = window.util.pinStartX + ',' + window.util.pinStartY;
 
     var successClick = function () {
       main.removeChild(success);
@@ -101,6 +108,7 @@ window.form = (function () {
     window.map.insertDisabled();
     window.map.mapDisabled();
     window.map.deactivateMap();
+    window.util.mapForm.reset();
   };
   var disableMap = function () {
     window.util.adForm.classList.add('ad-form--disabled');
