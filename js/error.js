@@ -7,10 +7,13 @@ window.error = (function () {
     var errorButton = errorBlock.querySelector('.error__button');
 
     main.appendChild(errorBlock);
+    window.map.deactivateMap();
+    window.form.disableMap();
 
     errorButton.addEventListener('click', function (evt) {
       evt.preventDefault();
       main.removeChild(errorBlock);
+      window.map.onActiveRemoveDisabled();
     });
   };
   return {
