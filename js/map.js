@@ -23,25 +23,17 @@ window.map = (function () {
   window.backend.load(function (data) {
     offersData = data;
     window.util.blockElements.addEventListener('click', function (event) {
-      var popupBlock = document.querySelector('.map__card');
-      var pinBlock = document.querySelector('.map__pin:not(.map__pin--main)');
-      var popId = popupBlock.dataset.id;
-      var pinId = pinBlock.dataset.id;
-      // добавляю условие открытия
-      if (event.target.localName === 'img' && event.target.alt !== 'Метка объявления' && pinId === popId) {
-        openPopup();
+      var pinId = event.target.dataset.id ? event.target.dataset.id : event.target.parentNode.dataset.id;
+      if (event.target.localName === 'img' && event.target.alt !== 'Метка объявления') {
+        openPopup(pinId);
       }
     });
     window.util.blockElements.addEventListener('keydown', function (e) {
-      var popupBlock = document.querySelector('.map__card');
-      var pinBlock = document.querySelector('.map__pin:not(.map__pin--main)');
-      var popId = popupBlock.dataset.id;
-      var pinId = pinBlock.dataset.id;
-      // добавляю условие открытия
-      if (e.target.localName === 'img' && e.target.alt !== 'Метка объявления' && pinId === popId) {
-        openPopup();
+      var pinId = event.target.dataset.id ? event.target.dataset.id : event.target.parentNode.dataset.id;
+      if (e.target.localName === 'img' && e.target.alt !== 'Метка объявления') {
+        openPopup(pinId);
       } else if (e.keyCode === window.util.ENTER_KEYCODE) {
-        openPopup();
+        openPopup(pinId);
       }
     });
   }, window.error.errorData);
@@ -173,23 +165,23 @@ window.map = (function () {
   });
   window.util.mapForm.addEventListener('change', insertFilter);
 
-  var openPopup = function () {
-    var popupBlock = document.querySelector('.map__card');
+  var openPopup = function (popupId) {
+    var popupSelector = '.map__card[data-id="' + popupId + '"]';
+    var popupBlock = document.querySelector(popupSelector);
     popupBlock.classList.remove('hidden');
 
     document.addEventListener('keydown', function (evt) {
+      var pinId = event.target.dataset.id ? event.target.dataset.id : event.target.parentNode.dataset.id;
       if (evt.keyCode === window.util.ESC_KEYCODE) {
-        window.card.closePopup();
+        window.card.closePopup(pinId);
       }
     });
   };
   var deactivateMap = function () {
+    window.card.deletePop(document);
     window.util.cardElements.classList.add('map--faded');
     window.util.activeMap.style.top = window.util.pinStartY + 'px';
     window.util.activeMap.style.left = window.util.pinStartX + 'px';
-    document.querySelectorAll('.map__pin');
-    document.querySelectorAll('.map__card');
-    window.card.closePopup();
   };
 
   insertDisabled();
