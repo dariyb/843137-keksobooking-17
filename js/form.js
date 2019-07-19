@@ -31,6 +31,7 @@ window.form = (function () {
   var guestsNumber = document.querySelector('#capacity');
   var guestsOption = guestsNumber.querySelectorAll('option');
   var adFormReset = window.util.adForm.querySelector('.ad-form__reset');
+  window.util.pinAddress.value = startX + ',' + startY;
 
   var getAvailableOptions = function () {
     guestsOption.forEach(function (guest) {
@@ -56,10 +57,6 @@ window.form = (function () {
         break;
     }
   };
-  getAvailableOptions();
-  roomNumber.addEventListener('change', getAvailableOptions);
-
-  window.util.pinAddress.value = startX + ',' + startY;
   var getHousePrice = function () {
     return typesPrice[houseType.value].minPrice;
   };
@@ -68,24 +65,6 @@ window.form = (function () {
     pricePlaceholder.setAttribute('placeholder', minPrice);
     pricePlaceholder.setAttribute('min', minPrice);
   };
-
-  houseType.addEventListener('change', function () {
-    matchHousePrice();
-  });
-
-  timeIn.addEventListener('change', function () {
-    timeOut.value = timeIn.value;
-  });
-  timeOut.addEventListener('change', function () {
-    timeIn.value = timeOut.value;
-  });
-  submitButton.addEventListener('click', function () {
-    window.util.adForm.addEventListener('submit', function (evt) {
-      window.backend.save(new FormData(window.util.adForm), onLoad, window.error.errorData);
-      evt.preventDefault();
-    });
-  });
-  matchHousePrice();
 
   var onLoad = function () {
     var successTemplate = document.querySelector('#success').content.querySelector('.success');
@@ -122,8 +101,25 @@ window.form = (function () {
       });
     });
   };
+  getAvailableOptions();
+  matchHousePrice();
   disableMap();
-  return {
-    disableMap: disableMap
-  };
+  houseType.addEventListener('change', function () {
+    matchHousePrice();
+  });
+
+  timeIn.addEventListener('change', function () {
+    timeOut.value = timeIn.value;
+  });
+  timeOut.addEventListener('change', function () {
+    timeIn.value = timeOut.value;
+  });
+  submitButton.addEventListener('click', function () {
+    window.util.adForm.addEventListener('submit', function (evt) {
+      window.backend.save(new FormData(window.util.adForm), onLoad, window.error.errorData);
+      evt.preventDefault();
+    });
+  });
+  roomNumber.addEventListener('change', getAvailableOptions);
+
 })();

@@ -40,8 +40,6 @@ window.card = (function () {
     cardInfo.querySelector('.popup__avatar').src = data.author.avatar;
     cardInfo.querySelector('.popup__avatar').alt = 'Аватар пользователя';
 
-    //    showFeatures(data.offer.features);
-
     var photos = cardInfo.querySelector('.popup__photo');
     var fragment = document.createDocumentFragment();
     if (data.offer.photos.length > 0) {
@@ -70,27 +68,38 @@ window.card = (function () {
     cardInfo.querySelector('.popup__photos').removeChild(cardInfo.querySelector('.popup__photos').querySelector('img'));
     cardInfo.querySelector('.popup__photos').appendChild(fragment);
     cardInfo.classList.add('hidden');
-    cardInfo.querySelector('.popup__close').addEventListener('click', closePopup);
+    cardInfo.querySelector('.popup__close').addEventListener('click', function () {
+      var pinId = event.target.dataset.id ? event.target.dataset.id : event.target.parentNode.dataset.id;
+      closePopup(pinId);
+    });
     document.querySelector('keydown', onPopupEscPress);
 
     cardInfo.dataset.id = id;
     return cardInfo;
   };
-  var onPopupEscPress = function (evt) {
-    if (evt.keyCode === window.util.ESC_KEYCODE) {
-      closePopup();
+  var onPopupEscPress = function () {
+    var pinId = event.target.dataset.id ? event.target.dataset.id : event.target.parentNode.dataset.id;
+    if (event.keyCode === window.util.ESC_KEYCODE) {
+      closePopup(pinId);
     }
   };
-  var closePopup = function () {
-    var popupBlock = document.querySelector('.map__card');
+  var closePopup = function (popupId) {
+    var popupSelector = '.map__card[data-id="' + popupId + '"]';
+    var popupBlock = document.querySelector(popupSelector);
     popupBlock.classList.add('hidden');
+
     document.removeEventListener('keydown', onPopupEscPress);
+  };
+  var deletePopup = function (popup) {
+    var elements = popup.querySelectorAll('.map__card');
+    Array.from(elements).forEach(function (element) {
+      element.remove();
+    });
   };
   return {
     createCard: createCard,
     onPopupEscPress: onPopupEscPress,
+    deletePopup: deletePopup,
     closePopup: closePopup
   };
 })();
-
-// доделать features
