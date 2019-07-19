@@ -7,7 +7,6 @@ window.map = (function () {
   var housingGuests = document.querySelector('#housing-guests');
   var housingPrice = document.querySelector('#housing-price');
   var housingType = window.util.mapForm.querySelector('#housing-type');
-  var housingFeatures = document.querySelectorAll('#housing-features');
   var maxPrice = 50000;
   var minPrice = 10000;
 
@@ -181,7 +180,6 @@ window.map = (function () {
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
-  window.util.mapForm.addEventListener('change', insertFilter);
 
   var openPopup = function (popupId) {
     var popupSelector = '.map__card[data-id="' + popupId + '"]';
@@ -201,6 +199,8 @@ window.map = (function () {
     window.util.activeMap.style.top = window.util.pinStartY + 'px';
     window.util.activeMap.style.left = window.util.pinStartX + 'px';
   };
+
+  window.util.mapForm.addEventListener('change', insertFilter);
 
   insertDisabled();
   mapDisabled();

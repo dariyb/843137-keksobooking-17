@@ -69,8 +69,8 @@ window.card = (function () {
     cardInfo.querySelector('.popup__photos').appendChild(fragment);
     cardInfo.classList.add('hidden');
     cardInfo.querySelector('.popup__close').addEventListener('click', function () {
-      var pinId = event.target.dataset.id ? event.target.dataset.id : event.target.parentNode.dataset.id;
-      closePopup(pinId);
+      var popId = event.target.dataset.id ? event.target.dataset.id : event.target.parentNode.dataset.id;
+      closePopup(popId);
     });
     document.querySelector('keydown', onPopupEscPress);
 
@@ -78,9 +78,9 @@ window.card = (function () {
     return cardInfo;
   };
   var onPopupEscPress = function () {
-    var pinId = event.target.dataset.id ? event.target.dataset.id : event.target.parentNode.dataset.id;
+    var popId = event.target.dataset.id ? event.target.dataset.id : event.target.parentNode.dataset.id;
     if (event.keyCode === window.util.ESC_KEYCODE) {
-      closePopup(pinId);
+      closePopup(popId);
     }
   };
   var closePopup = function (popupId) {
