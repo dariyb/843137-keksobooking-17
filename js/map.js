@@ -51,6 +51,9 @@ window.map = (function () {
     }
     return mapFieldsets;
   };
+  var onChangeDebounce = function () {
+    window.debounce(insertFilter);
+  };
 
   var onActiveRemoveDisabled = function () {
     window.util.cardElements.classList.remove('map--faded');
@@ -61,6 +64,7 @@ window.map = (function () {
       }
       return mapFieldsets;
     };
+    window.util.mapForm.addEventListener('change', onChangeDebounce);
     activateMap();
     for (var i = 0; i < adFieldsets.length; i++) {
       adFieldsets[i].removeAttribute('disabled', 'disabled');
@@ -94,11 +98,24 @@ window.map = (function () {
         return info.offer.guests === parseInt(housingGuests.value, 10);
       });
     }
+    var checkedFeatures = document.querySelectorAll('input[name=features]:checked');
+    var featuresValues = [];
+    checkedFeatures.forEach(function (feature) {
+      featuresValues.push(feature.value);
+    });
+    if (featuresValues.length > 0) {
+      data = data.filter(function (info) {
+        return featuresValues.every(function (feature) {
+          return info.offer.features.includes(feature);
+        });
+      });
+    }
     return data;
   };
   var insertFilter = function () {
     var filteredOffers = filterPins(offersData);
     window.pinModule.deletePins(window.util.blockElements);
+    window.card.deletePopup(document);
     window.pinModule.insertPins(filteredOffers.slice(0, window.util.maxDisplay));
   };
 
@@ -163,7 +180,6 @@ window.map = (function () {
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
-  window.util.mapForm.addEventListener('change', insertFilter);
 
   var openPopup = function (popupId) {
     var popupSelector = '.map__card[data-id="' + popupId + '"]';
@@ -183,6 +199,8 @@ window.map = (function () {
     window.util.activeMap.style.top = window.util.pinStartY + 'px';
     window.util.activeMap.style.left = window.util.pinStartX + 'px';
   };
+
+  window.util.mapForm.addEventListener('change', insertFilter);
 
   insertDisabled();
   mapDisabled();
