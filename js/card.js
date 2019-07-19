@@ -90,16 +90,16 @@ window.card = (function () {
 
     document.removeEventListener('keydown', onPopupEscPress);
   };
-  var deletePop = function (popup) {
-    var el = popup.querySelectorAll('.map__card');
-    Array.from(el).forEach(function (element) {
+  var deletePopup = function (popup) {
+    var elements = popup.querySelectorAll('.map__card');
+    Array.from(elements).forEach(function (element) {
       element.remove();
     });
   };
   return {
     createCard: createCard,
     onPopupEscPress: onPopupEscPress,
-    deletePop: deletePop,
+    deletePopup: deletePopup,
     closePopup: closePopup
   };
 })();

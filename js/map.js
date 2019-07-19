@@ -178,7 +178,7 @@ window.map = (function () {
     });
   };
   var deactivateMap = function () {
-    window.card.deletePop(document);
+    window.card.deletePopup(document);
     window.util.cardElements.classList.add('map--faded');
     window.util.activeMap.style.top = window.util.pinStartY + 'px';
     window.util.activeMap.style.left = window.util.pinStartX + 'px';
