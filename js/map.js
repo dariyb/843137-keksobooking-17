@@ -51,6 +51,9 @@ window.map = (function () {
     }
     return mapFieldsets;
   };
+  var onChangeDebounce = function () {
+    window.debounce(insertFilter);
+  };
 
   var onActiveRemoveDisabled = function () {
     window.util.cardElements.classList.remove('map--faded');
@@ -61,6 +64,7 @@ window.map = (function () {
       }
       return mapFieldsets;
     };
+    window.util.mapForm.addEventListener('change', onChangeDebounce);
     activateMap();
     for (var i = 0; i < adFieldsets.length; i++) {
       adFieldsets[i].removeAttribute('disabled', 'disabled');
