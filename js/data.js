@@ -1,6 +1,8 @@
 'use strict';
 (function () {
   window.util = {
+    SUCCESS_LOAD: 200,
+    TIMEOUT: 10000,
     ESC_KEYCODE: 27,
     ENTER_KEYCODE: 13,
     maxXLocation: 1200,

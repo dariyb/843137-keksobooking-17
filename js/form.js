@@ -79,21 +79,47 @@ window.form = (function () {
     var successClick = function () {
       main.removeChild(success);
       document.removeEventListener('click', successClick);
+      document.removeEventListener('keydown', function (evt) {
+        if (evt.keyCode === window.util.ESC_KEYCODE) {
+          successClick();
+        } else if (evt.keyCode === window.util.ENTER_KEYCODE) {
+          successClick();
+        }
+      });
     };
     document.addEventListener('click', successClick);
+    document.addEventListener('keydown', function (e) {
+      if (e.keyCode === window.util.ENTER_KEYCODE) {
+        successClick();
+      } else if (e.keyCode === window.util.ESC_KEYCODE) {
+        successClick();
+      }
+    });
   };
   var resetForm = function () {
     window.util.adForm.reset();
-    window.map.insertDisabled();
-    window.map.mapDisabled();
-    window.map.deactivateMap();
+    window.pinModule.deletePins(window.util.blockElements);
+    window.card.deletePopup(document);
     window.util.mapForm.reset();
+    disableMap();
+    window.map.deactivateMap();
+    window.util.pinAddress.value = window.util.pinStartX + ',' + window.util.pinStartY;
   };
   var disableMap = function () {
     window.util.adForm.classList.add('ad-form--disabled');
     adFormReset.removeEventListener('click', resetForm);
     window.map.insertDisabled();
     window.map.mapDisabled();
+    houseType.removeEventListener('change', function () {
+      matchHousePrice();
+    });
+    timeIn.removeEventListener('change', function () {
+      timeOut.value = timeIn.value;
+    });
+    timeOut.removeEventListener('change', function () {
+      timeIn.value = timeOut.value;
+    });
+    roomNumber.removeEventListener('change', getAvailableOptions);
     submitButton.removeEventListener('click', function () {
       window.util.adForm.addEventListener('submit', function (evt) {
         window.backend.save(new FormData(window.util.adForm), onLoad, window.error.errorData);
@@ -101,6 +127,10 @@ window.form = (function () {
       });
     });
   };
+  adFormReset.addEventListener('click', function () {
+    resetForm();
+    disableMap();
+  });
   getAvailableOptions();
   matchHousePrice();
   disableMap();

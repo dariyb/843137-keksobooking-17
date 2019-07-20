@@ -87,6 +87,7 @@ window.card = (function () {
     var popupSelector = '.map__card[data-id="' + popupId + '"]';
     var popupBlock = document.querySelector(popupSelector);
     popupBlock.classList.add('hidden');
+    document.querySelector('.map__pin--active').classList.remove('.map__pin--active');
 
     document.removeEventListener('keydown', onPopupEscPress);
   };
@@ -98,7 +99,6 @@ window.card = (function () {
   };
   return {
     createCard: createCard,
-    onPopupEscPress: onPopupEscPress,
     deletePopup: deletePopup,
     closePopup: closePopup
   };

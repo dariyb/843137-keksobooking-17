@@ -25,14 +25,17 @@ window.map = (function () {
     window.util.blockElements.addEventListener('click', function (event) {
       var pinId = event.target.dataset.id ? event.target.dataset.id : event.target.parentNode.dataset.id;
       if (event.target.localName === 'img' && event.target.alt !== 'Метка объявления') {
+        event.target.parentNode.classList.add('.map__pin--active');
         openPopup(pinId);
       }
     });
     window.util.blockElements.addEventListener('keydown', function (e) {
       var pinId = event.target.dataset.id ? event.target.dataset.id : event.target.parentNode.dataset.id;
       if (e.target.localName === 'img' && e.target.alt !== 'Метка объявления') {
+        event.target.parentNode.classList.add('.map__pin--active');
         openPopup(pinId);
       } else if (e.keyCode === window.util.ENTER_KEYCODE) {
+        event.target.parentNode.classList.add('.map__pin--active');
         openPopup(pinId);
       }
     });
@@ -198,6 +201,7 @@ window.map = (function () {
     window.util.cardElements.classList.add('map--faded');
     window.util.activeMap.style.top = window.util.pinStartY + 'px';
     window.util.activeMap.style.left = window.util.pinStartX + 'px';
+    window.util.mapForm.removeEventListener('change', onChangeDebounce);
   };
 
   window.util.mapForm.addEventListener('change', insertFilter);
