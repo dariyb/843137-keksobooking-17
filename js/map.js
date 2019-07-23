@@ -25,17 +25,26 @@ window.map = (function () {
     window.util.blockElements.addEventListener('click', function (event) {
       var pinId = event.target.dataset.id ? event.target.dataset.id : event.target.parentNode.dataset.id;
       if (event.target.localName === 'img' && event.target.alt !== 'Метка объявления') {
-        event.target.parentNode.classList.add('.map__pin--active');
+        var activeBlock = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+        var activeCard = document.querySelectorAll('.map__card');
+        activeCard.forEach(function (it) {
+          it.classList.add('hidden');
+          for (var i = 0; i < activeBlock.length; i++) {
+            activeBlock[i].classList.remove('map__pin--active');
+          }
+        });
+
+        event.target.parentNode.classList.add('map__pin--active');
         openPopup(pinId);
       }
     });
     window.util.blockElements.addEventListener('keydown', function (e) {
       var pinId = event.target.dataset.id ? event.target.dataset.id : event.target.parentNode.dataset.id;
       if (e.target.localName === 'img' && e.target.alt !== 'Метка объявления') {
-        event.target.parentNode.classList.add('.map__pin--active');
+        event.target.parentNode.classList.add('map__pin--active');
         openPopup(pinId);
       } else if (e.keyCode === window.util.ENTER_KEYCODE) {
-        event.target.parentNode.classList.add('.map__pin--active');
+        event.target.parentNode.classList.add('map__pin--active');
         openPopup(pinId);
       }
     });
