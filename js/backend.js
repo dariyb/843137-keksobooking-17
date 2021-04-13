@@ -2,7 +2,7 @@
 (function () {
   window.backend = {
     load: function (onLoad, onError) {
-      var URL = 'https://js.dump.academy/keksobooking/data';
+      var URL = 'https://22.javascript.pages.academy/keksobooking/data';
       var xhr = new XMLHttpRequest();
       xhr.responseType = 'json';
 
@@ -24,7 +24,7 @@
       xhr.send();
     },
     save: function (data, onLoad, onError) {
-      var URL = 'https://js.dump.academy/keksobooking';
+      var URL = 'https://22.javascript.pages.academy/keksobooking';
       var xhr = new XMLHttpRequest();
       xhr.responseType = 'json';
       xhr.addEventListener('load', function () {
